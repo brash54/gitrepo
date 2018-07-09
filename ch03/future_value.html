@@ -5,34 +5,62 @@
     <title>Future Value Application</title>
     <script>
 		var futureValue;
+		var calcInterest;
+		var displayString = "";
 		var again = "y";
 		
 		//add do while to allow repeated entries
 		do {
 		// get user entries
+		do {
 		var investment = prompt("Enter investment amount as xxxxx.xx", 10000);
 		investment = parseFloat(investment);
+		if (isNaN(investment)) {
+			alert("Investment must be a number");
+			}
+		}
+		while (isNaN(investment));
+
+		do {
 		var rate = prompt("Enter interest rate as xx.x", 7.5);
 		rate = parseFloat(rate);
+		if (isNaN(rate) || rate <= 0 || rate >= 15) {
+		alert("Rate must be a number greater than zero and less than 15");
+		}
+
+		}
+		while (isNaN(rate) || rate <= 0 || rate >= 15);
+
+		do{
 		var years = prompt("Enter number of years", 10);
 		years = parseInt(years);
-		
+		if (isNaN(years)) {
+			alert("Years must be a number");
+		}
+		}
+		while (isNaN(years));
 		
 	
 	
 		// calulate future value
+		document.write("Investment amount = " + investment + " Interest rate = " + rate + " Years = " + years + "<br>");
 		futureValue = investment;
 		for (var i = 1; i <= years; i++ ) {
-			futureValue = futureValue + (futureValue * rate / 100);
+			calcInterest = (futureValue * rate / 100);
+			futureValue = futureValue + calcInterest;
+			futureValue = parseInt(futureValue);
+			document.write("Year=" + i + " Interest=" + calcInterest + " Value=" + futureValue + "<br>");
 		}
-		futureValue = parseInt(futureValue);
+		/* futureValue = parseInt(futureValue);
 		document.write("Investment amount = " + investment);
 		document.write(" Interest rate = " + rate);
 		document.write(" Years = " + years);
-		document.write(" Future Value is " + futureValue + "<br><br>");	
+		document.write(" Future Value is " + futureValue + "<br><br>");	 */
+		document.write("<br>");
 		again = prompt("Repeat entries?:", "y");
 	
 		}
+		
 		while (again == "y");
 
     </script>
