@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Circadian Cycle Alarm</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			 var url = "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2018-07-30";
+		
+			$.getJSON(url, function(data) {
+                // $.getJSON("sun.json", function(data) {
+				// $.each(data, function(){	
+                    $.each(data, function(key, value){
+                        $("#sundata").append(
+                          /*  "astronomical_twilight_end: " + value.astronomical_twilight_end + "<br>" + */
+                            "sunrise: " + value.sunrise + "<br>" +
+                            "sunset: " + value.sunset + "<br>" 
+                           /*  "solar_noon: " + value.solar_noon + "<br>" +
+                            "day_length: " + value.day_length + "<br>" +
+                            "civil_twilight_begin: " + value.civil_twilight_begin + "<br>" +
+                            "civil_twilight_end: " + value.civil_twilight_end + "<br>" +
+                            "nautical_twilight_begin: " + value.nautical_twilight_begin + "<br>" +
+                            "nautical_twilight_end: " + value.nautical_twilight_end + "<br>" +
+                            "astronomical_twilight_begin: " + value.astronomical_twilight_begin + "<br>" +
+                            "astronomical_twilight_end: " + value.astronomical_twilight_end + "<br>"  */ 
+                        );
+                    });//inner eaach
+                   
+				// });//each */
+                // alert($("#team").html(html));
+				// $("#team").html(html);
+			});	//getjason
+		});//document ready
+    </script>
+</head>
+
+<body>
+    <header></header>
+    
+    
+    <main>
+      
+        
+		<div id="sundata"></div>
+    </main>
+    
+    <footer></footer>
+</body>
+</html>
