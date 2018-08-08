@@ -3,36 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <title>Circadian Cycle Alarm</title>
-    <link href="main.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link  rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/flipclock.css">
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="js/flipclock/flipclock.min.js"></script>
+  
 	<script>
 		$(document).ready(function(){
-			 var url = "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2018-07-30";
-		
-			$.getJSON(url, function(data) {
-                // $.getJSON("sun.json", function(data) {
-				// $.each(data, function(){	
-                    $.each(data, function(key, value){
-                        $("#sundata").append(
-                          /*  "astronomical_twilight_end: " + value.astronomical_twilight_end + "<br>" + */
-                            "sunrise: " + value.sunrise + "<br>" +
-                            "sunset: " + value.sunset + "<br>" 
-                           /*  "solar_noon: " + value.solar_noon + "<br>" +
-                            "day_length: " + value.day_length + "<br>" +
-                            "civil_twilight_begin: " + value.civil_twilight_begin + "<br>" +
-                            "civil_twilight_end: " + value.civil_twilight_end + "<br>" +
-                            "nautical_twilight_begin: " + value.nautical_twilight_begin + "<br>" +
-                            "nautical_twilight_end: " + value.nautical_twilight_end + "<br>" +
-                            "astronomical_twilight_begin: " + value.astronomical_twilight_begin + "<br>" +
-                            "astronomical_twilight_end: " + value.astronomical_twilight_end + "<br>"  */ 
+
+
+             var clock = $('.clock').FlipClock({
+            clockFace: 'TwelveHourClock'
+           
+        });
+
+    
+   
+
+        $("#datepicker").datepicker({
+            minDate: new Date(),
+            maxDate: 30
+        });
+           $("#set_alarm").click(function(){ 
+            var zipCode = $("#zip_code").val();
+           
+            var alarmDate = new Date;
+            alarmDate = $("#datepicker").val();
+           
+           var alarmYear = alarmDate.substring(6);
+           
+           var alarmDay = alarmDate.substring(3, 5);
+           
+           var alarmMonth = alarmDate.substring(0, 2);
+           console.log(alarmMonth);
+           
+            var apiDate = alarmYear + "-" + alarmMonth  + "-" + alarmDay;
+            console.log(apiDate);
+           
+            var locUrl1 = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+            var locUrl2 = "&key=AIzaSyBBRAiapQxnydUukcB3NA296Mu6UNLICC8";
+            var locUrl = locUrl1 + zipCode + locUrl2;
+
+
+           $.getJSON(locUrl, function(data1) {
+              
+                        
+                        $("#locdata").append(
+                            "lat: " + data1.results[0].geometry.location.lat + "<br>" +
+                            "lng: " + data1.results[0].geometry.location.lng + "<br>"    
                         );
-                    });//inner eaach
-                   
-				// });//each */
-                // alert($("#team").html(html));
-				// $("#team").html(html);
-			});	//getjason
-		});//document ready
+                latLng=  "lat=" + data1.results[0].geometry.location.lat + "&lng=" + data1.results[0].geometry.location.lng;  
+                var sunUrl1 = "https://api.sunrise-sunset.org/json?";
+
+                var sunUrl = sunUrl1 + latLng + "&date=" + apiDate;
+
+                $.getJSON(sunUrl, function(data) {
+             
+                      
+            /*   $("#sundata").append(
+               
+                  "sunrise: " + data.results.sunrise + "<br>" +
+                  "sunset: " + data.results.sunset + "<br>" 
+             
+              ); */
+
+            var utcSunrise = alarmDate + " " +  data.results.sunrise + " UTC";
+          
+            var localSunrise = new Date("'" + utcSunrise + "'");
+
+             var utcSunset = alarmDate + " " +  data.results.sunset + " UTC";
+            
+            var utcSunset = utcSunset.replace("AM", "PM");
+            var localSunset = new Date("'" + utcSunset + "'");
+
+              $("#sundata").append(
+               
+               "sunrise: " + localSunrise + "<br>" +
+               "sunset: " + localSunset + "<br>" 
+
+              
+            // var localSunrise = utcSunrise.toString();
+
+            
+            );
+
+
+ //alert(localSunrise);
+   var localSunriseHrs = new Date();
+  // var localSunriseHrs = localSunrise.getHours() + 12; // convert to 24 hour time for testing
+ //  alert(localSunriseHrs);
+            
+            setInterval(function() {
+    var nowTime = new Date();
+    var nowTime =  nowTime.getHours() + ":" + nowTime.getMinutes() ;
+    // $('#clock-wrapper').html(cuttime);
+    // alert(nowTime);
+    // $("#init_alarm").click(function(){
+
+  
+ var alarmTime = new Date();
+   // var alarmTime = localSunriseHrs + ":" + localSunrise.getMinutes(); // for testing
+   var alarmTime = localSunrise.getHours() + ":" + localSunrise.getMinutes(); // localSunrise is 12 hour clock while alarmTime is 24 hour clock. Will be equal once per day
+
+
+    if(nowTime == alarmTime){
+       // alert(nowTime); 
+    $("#siren").trigger('play');
+    } 
+    
+    
+    //  });
+      
+        
+    
+}, 500); 
+
+
+
+       
+  });	//getjason
+
+                
+
+
+                
+            });	//getjason
+
+
+       
+            
+
+//   var sunUrl1 = "https://api.sunrise-sunset.org/json?";
+//    lat=36.7201600&lng=-4.4203400&date=2018-07-30";
+ 
+//   var sunUrl = "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2018-07-30";
+// var latLng = localStorage.latLngStor;
+
+  
+
+
+
+// console.log(sunUrl);
+			/* $.getJSON("sun.json", function(data) {
+              
+                      
+                        $("#sundata").append(
+                         
+                            "sunrise: " + data.results.sunrise + "<br>" +
+                            "sunset: " + data.results.sunset + "<br>" 
+                       
+                        );
+                 
+			});	//getjason */
+
+            }); //setAlarm
+            
+
+            // var alarmTime = new Date;
+            var location;
+            var lat;
+            var long;
+		
+      
+  
+
+            
+// var clock = $('.your-clock').FlipClock({
+// ... your options here
+/* var clock = $('.clock').FlipClock({
+		clockFace: 'TwelveHourClock'
+}); */
+		});//end ready
+
+     
+
     </script>
 </head>
 
@@ -41,9 +187,56 @@
     
     
     <main>
+
+            <!-- <div class="your-clock"></div> -->
+		
+        <div class="clock"></div>
+
+           
+            
+    
       
+        <label>Enter Your Zip Code:</label>
+        <input type="text" id="zip_code"><br>
+        <label>Pick Alarm Start Date:</label>
+        <label><input type="text" id="datepicker"></label><br>
+        <Label>&nbsp;</Label>
+        <input type="button" id="set_alarm" value="Configure Alarm"><br>
+        <Label>&nbsp;</Label>
+        <input type="button" id="init_alarm" value="Initiate Alarm"><br>
+
         
-		<div id="sundata"></div>
+        
+        <div id="locdata"></div>
+        <div id="sundata"></div>
+
+
+        <audio id="siren" controls="controls">
+            <source src="sound/siren_noise.mp3" type="audio/mpeg">
+            <!-- <a href="sound/siren_noise.mp3">Download the Podcast</a> (MP3) -->
+          </audio>
+
+          <button onclick="enableLoop()" type="button">Enable loop</button>
+<button onclick="disableLoop()" type="button">Disable loop</button>
+<button onclick="checkLoop()" type="button">Check loop status</button>
+
+<script>
+var x = document.getElementById("siren");
+
+function enableLoop() { 
+    x.loop = true;
+    x.load();
+} 
+
+function disableLoop() { 
+    x.loop = false;
+    x.load();
+} 
+
+function checkLoop() { 
+    alert(x.loop);
+} 
+</script> 
     </main>
     
     <footer></footer>

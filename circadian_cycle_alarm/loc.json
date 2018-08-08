@@ -1,0 +1,70 @@
+
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "19119",
+               "short_name" : "19119",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "Northwest Philadelphia",
+               "short_name" : "Northwest Philadelphia",
+               "types" : [ "neighborhood", "political" ]
+            },
+            {
+               "long_name" : "Philadelphia",
+               "short_name" : "Philadelphia",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Philadelphia County",
+               "short_name" : "Philadelphia County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Pennsylvania",
+               "short_name" : "PA",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Philadelphia, PA 19119, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 40.073124,
+                  "lng" : -75.167844
+               },
+               "southwest" : {
+                  "lat" : 40.031513,
+                  "lng" : -75.214322
+               }
+            },
+            "location" : {
+               "lat" : 40.0487466,
+               "lng" : -75.1953934
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 40.073124,
+                  "lng" : -75.167844
+               },
+               "southwest" : {
+                  "lat" : 40.031513,
+                  "lng" : -75.214322
+               }
+            }
+         },
+         "place_id" : "ChIJwxJ_cQO5xokRyZpLU9nCMec",
+         "types" : [ "postal_code" ]
+      }
+   ],
+   "status" : "OK"
+}
