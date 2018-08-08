@@ -2,25 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
     <title>Circadian Cycle Alarm</title>
     <link href="css/main.css" rel="stylesheet">
-    <link  rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css">
     <link rel="stylesheet" href="css/flipclock.css">
+    <link  rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="js/flipclock/flipclock.min.js"></script>
   
 	<script>
 		$(document).ready(function(){
-
-
              var clock = $('.clock').FlipClock({
             clockFace: 'TwelveHourClock'
-           
         });
-
-    
-   
 
         $("#datepicker").datepicker({
             minDate: new Date(),
@@ -61,13 +59,7 @@
 
                 $.getJSON(sunUrl, function(data) {
              
-                      
-            /*   $("#sundata").append(
-               
-                  "sunrise: " + data.results.sunrise + "<br>" +
-                  "sunset: " + data.results.sunset + "<br>" 
-             
-              ); */
+           
 
             var utcSunrise = alarmDate + " " +  data.results.sunrise + " UTC";
           
@@ -83,40 +75,27 @@
                "sunrise: " + localSunrise + "<br>" +
                "sunset: " + localSunset + "<br>" 
 
-              
-            // var localSunrise = utcSunrise.toString();
-
-            
             );
 
 
- //alert(localSunrise);
-   var localSunriseHrs = new Date();
-  // var localSunriseHrs = localSunrise.getHours() + 12; // convert to 24 hour time for testing
- //  alert(localSunriseHrs);
+
             
-            setInterval(function() {
+  setInterval(function() {
     var nowTime = new Date();
     var nowTime =  nowTime.getHours() + ":" + nowTime.getMinutes() ;
-    // $('#clock-wrapper').html(cuttime);
-    // alert(nowTime);
-    // $("#init_alarm").click(function(){
-
+   
   
  var alarmTime = new Date();
-   // var alarmTime = localSunriseHrs + ":" + localSunrise.getMinutes(); // for testing
-   var alarmTime = localSunrise.getHours() + ":" + localSunrise.getMinutes(); // localSunrise is 12 hour clock while alarmTime is 24 hour clock. Will be equal once per day
+ 
+/* localSunrise is 12 hour clock while alarmTime is 24 hour clock. Will be equal once per day
+Testing can be carried out by setting local time on PC to a few minutes before a sunrise time. Time should be AM. */
 
+   var alarmTime = localSunrise.getHours() + ":" + localSunrise.getMinutes(); 
 
     if(nowTime == alarmTime){
        // alert(nowTime); 
     $("#siren").trigger('play');
     } 
-    
-    
-    //  });
-      
-        
     
 }, 500); 
 
@@ -132,49 +111,9 @@
             });	//getjason
 
 
-       
-            
-
-//   var sunUrl1 = "https://api.sunrise-sunset.org/json?";
-//    lat=36.7201600&lng=-4.4203400&date=2018-07-30";
- 
-//   var sunUrl = "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2018-07-30";
-// var latLng = localStorage.latLngStor;
-
-  
-
-
-
-// console.log(sunUrl);
-			/* $.getJSON("sun.json", function(data) {
-              
-                      
-                        $("#sundata").append(
-                         
-                            "sunrise: " + data.results.sunrise + "<br>" +
-                            "sunset: " + data.results.sunset + "<br>" 
-                       
-                        );
-                 
-			});	//getjason */
-
             }); //setAlarm
-            
-
-            // var alarmTime = new Date;
-            var location;
-            var lat;
-            var long;
-		
+        
       
-  
-
-            
-// var clock = $('.your-clock').FlipClock({
-// ... your options here
-/* var clock = $('.clock').FlipClock({
-		clockFace: 'TwelveHourClock'
-}); */
 		});//end ready
 
      
@@ -183,27 +122,25 @@
 </head>
 
 <body>
-    <header></header>
+    <header class="clock">
+        <div ></div>
+    </header>
     
     
     <main>
 
             <!-- <div class="your-clock"></div> -->
 		
-        <div class="clock"></div>
-
-           
-            
-    
+        
       
         <label>Enter Your Zip Code:</label>
         <input type="text" id="zip_code"><br>
-        <label>Pick Alarm Start Date:</label>
-        <label><input type="text" id="datepicker"></label><br>
+        <label>Choose Alarm Date:</label>
+        <input type="text" id="datepicker"><br>
         <Label>&nbsp;</Label>
-        <input type="button" id="set_alarm" value="Configure Alarm"><br>
-        <Label>&nbsp;</Label>
-        <input type="button" id="init_alarm" value="Initiate Alarm"><br>
+        <input type="button" id="set_alarm" value="Set Alarm"><br>
+      
+        
 
         
         
@@ -213,30 +150,9 @@
 
         <audio id="siren" controls="controls">
             <source src="sound/siren_noise.mp3" type="audio/mpeg">
-            <!-- <a href="sound/siren_noise.mp3">Download the Podcast</a> (MP3) -->
           </audio>
 
-          <button onclick="enableLoop()" type="button">Enable loop</button>
-<button onclick="disableLoop()" type="button">Disable loop</button>
-<button onclick="checkLoop()" type="button">Check loop status</button>
-
-<script>
-var x = document.getElementById("siren");
-
-function enableLoop() { 
-    x.loop = true;
-    x.load();
-} 
-
-function disableLoop() { 
-    x.loop = false;
-    x.load();
-} 
-
-function checkLoop() { 
-    alert(x.loop);
-} 
-</script> 
+   
     </main>
     
     <footer></footer>
