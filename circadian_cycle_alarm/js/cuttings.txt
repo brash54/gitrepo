@@ -1,0 +1,3 @@
+ $("#zip_code").next().text("Please enter a valid zip code.")
+                                };)
+                        }
