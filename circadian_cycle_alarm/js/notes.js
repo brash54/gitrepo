@@ -3,11 +3,12 @@
                 
                var  apiGM = { 
                    
-                getlatlng: $.getJSON(locUrl, function(data) {
+                getlatlng: $.getJSON(locURL, function(data) {
                    var lat = data.results[0].geometry.location.lat;
                    var lng = data.results[0].geometry.location.lng;
-                    return     
-                });
+                    return   latLng = "lat=" + lat + "&lng=" + lng
+                              
+                }),
                  
                 };
 
@@ -36,3 +37,20 @@
                             var sunUrl1 = "https://api.sunrise-sunset.org/json?";
         
                             var sunUrl = sunUrl1 + latLng + "&date=" + apiDate;
+
+
+
+
+
+
+                            var  apiGM = {
+                                locURL: "",
+                               getlatlng: function(locURL) { 
+                                        $.getJSON(locURL, function(data) {
+                                            alert(data)
+                                            alert(data.results[0].geometry.location.lat)
+                                    return "lat=" + data.results[0].geometry.location.lat + "&lng=" +  data.results[0].geometry.location.lng;
+                                },       
+                                    )
+                               }
+                                };// apiGM

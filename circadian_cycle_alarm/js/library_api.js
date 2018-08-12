@@ -12,4 +12,16 @@
                         
                        }        
 
-                    }; //api
+                    }; //gmURL
+
+                   var chkDate = {
+                        
+                    isValid: function(alarmDate) {
+                        if ( alarmDate === "") {
+                            return false;
+                        } else return true;
+                    }
+                };
+
+
+
